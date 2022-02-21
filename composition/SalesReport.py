@@ -4,21 +4,22 @@ import json
 from zipfile import ZipFile
 
 
-class ZipCompressor():
-    ''' Nossos compressores terão fixado o local de salvamento
-    do arquivo, então vamos defini-lo nos construtores'''
+class Compressor(ABC):
     def __init__(self, filepath='./'):
         self.filepath = filepath
 
+    @abstractmethod
+    def compress(self, file_name):
+        raise NotImplementedError
+
+
+class ZipCompressor(Compressor):
     def compress(self, file_name):
         with ZipFile(file_name + '.zip', 'w') as zip_file:
             zip_file.write(file_name)
 
 
-class GzCompressor():
-    def __init__(self, filepath='./'):
-        self.filepath = filepath
-
+class GzCompressor(Compressor):
     def compress(self, file_name):
         with open(file_name, 'rb') as content:
             with gzip.open(file_name + '.gz', 'wb') as gzip_file:
