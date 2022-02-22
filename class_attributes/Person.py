@@ -17,7 +17,6 @@ class Person:
         cls.number_of_people += 1
 
 
-
 p1 = Person('João', 20)
 p2 = Person('Maria', 25)
 print(Person.number_of_people_())
